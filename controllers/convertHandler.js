@@ -3,57 +3,56 @@ function ConvertHandler() {
   // GET NUMBER
   this.getNum = function(input) {
     let result;
-    let rgxtillLastNr = /^(.*?\d)/
+    // let rgxtillLastNr = /^(.*?\d)/
     let rgxOnlyUnit = /^(gal|l|mi|km|lbs|kg)$/i
-    let rgxUnitAtEnd = /(.*)(gal|l|mi|km|lbs|kg)$/i
-    let rgxNrAtBeggining = /^\d/
+    // let rgxUnitAtEnd = /(.*)(gal|l|mi|km|lbs|kg)$/i
+    let rgxNr = /^\d.*\d/
 
     let rgxDoubleFraction = /\/\d+\/\d+/
     let rgxFractDecimal = /^[-+]?(\d+(\.\d+)?|\.\d+)\/[-+]?(\d+(\.\d+)?|\.\d+)/
     let rgxDecimal = /^\d+(\.\d+)/
     let rgxFractional = /^\d+\/\d+/
     let rgxOnlyNr = /^\d+$/
-  
+    let invld = "invalid number"
     
-    function matchRGX (inpt, rgx) {
+    function matchRGX (rgx) {
+      let inpt = input
       return inpt.match(rgx)[0]
     }
 
-    let nr = input.match(rgxUnitAtEnd)[1]
-
-    // 1. number at the begginig
-    if (rgxNrAtBeggining.test(nr)) {
+    if (rgxNr.test(input)) {
+      let nr = matchRGX(rgxNr)
       
-      if (rgxDoubleFraction.test(nr)) {
-        result = "invalid number"
+      if (rgxDoubleFraction.test(input)) {
+        result = invld
 
-      } else if (rgxFractDecimal.test(nr)) {
-        let nrMatch = matchRGX(nr, rgxFractDecimal)
-        let splt = nrMatch.split("/");
+      } else if (rgxFractDecimal.test(input)) {
+        nr = matchRGX(rgxFractDecimal)
+        let splt = nr.split("/");
         let numerator = parseFloat(splt[0]);
+        // console.log("numerator = " + numerator)
         let denominator = parseFloat(splt[1]);
+        // console.log("denominator = " + denominator)
         result = numerator / denominator;
        
-      } else if (rgxFractional.test(nr)) {
-        result = matchRGX(nr, rgxFractional)
+      } else if (rgxFractional.test(input)) {
+        result = matchRGX(input, rgxFractional)
        
-      } else if (rgxDecimal.test(nr)) {
-        result = matchRGX(nr, rgxDecimal)
-
+      } else if (rgxDecimal.test(input)) {
+        result = matchRGX(rgxDecimal)
+        
       } else if (rgxOnlyNr.test(nr)) {
-        result = matchRGX(nr, rgxOnlyNr)
-
-      } else if (rgxOnlyUnit.test(nr)) {
-        result = 1
+        result = matchRGX(nr)
 
       } else {
-        result = "invalid number"
+        result = invld
       }
 
-    // 2. not number at the beggining
     } else {
-      rgxOnlyUnit.test(input) ? result = 1 : result = "invalid number"
+      rgxOnlyUnit.test(input) ? result = 1 : result = invld
     }
+
+
     
     return result;
   };
