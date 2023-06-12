@@ -14,9 +14,9 @@ module.exports = function (app) {
       let getNr = convertHandler.getNum(inp)
       let getUnit = convertHandler.getUnit(inp)
       // let returnUnit = convertHandler.getReturnUnit(getUnit)
-      let convert = convertHandler.convert(
-        convertHandler.getNum(inp), convertHandler.getUnit(inp)
-      )
+      // let convert = convertHandler.convert(
+      //   convertHandler.getNum(inp), convertHandler.getUnit(inp)
+      // )
       // let stringResult = convertHandler.getString(
       //   getNr, getUnit, convert, returnUnit
       // )
@@ -26,14 +26,14 @@ module.exports = function (app) {
       console.log("initNum = " + getNr)
       console.log("initUnit = " + getUnit)
       // console.log("return unit = " + returnUnit)
-      console.log("return nr = " + convert)
+      // console.log("return nr = " + convert)
       // console.log("string = " + stringResult)
       console.log("......")
 
       res.send({
         initNum: getNr, 
         initUnit: getUnit, 
-        returnNum: convert,
+        // returnNum: convert,
         // returnUnit: returnUnit, 
         // string: stringResult
       })

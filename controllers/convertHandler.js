@@ -5,46 +5,55 @@ function ConvertHandler() {
     let result;
     let rgxtillLastNr = /^(.*?\d)/
     let rgxOnlyUnit = /^(gal|l|mi|km|lbs|kg)$/i
-    let rgxOnlyNr = /^\d+$/
+    let rgxUnitAtEnd = /(.*)(gal|l|mi|km|lbs|kg)$/i
+    let rgxNrAtBeggining = /^\d/
 
-    let rgxDecimal = /^[+-]?\d+(\.\d+)?/
-    let rgxFractional = /^\d+\/\d+/
-    let rgxFractDecimal = /^[-+]?(\d+(\.\d+)?|\.\d+)\/[-+]?(\d+(\.\d+)?|\.\d+)/
-    let rgxNoNumber = /^[^0-9].*/
     let rgxDoubleFraction = /\/\d+\/\d+/
-    let rgxSpecialChar = /^[^a-zA-Z0-9]+/
-    let nr;
+    let rgxFractDecimal = /^[-+]?(\d+(\.\d+)?|\.\d+)\/[-+]?(\d+(\.\d+)?|\.\d+)/
+    let rgxDecimal = /^\d+(\.\d+)/
+    let rgxFractional = /^\d+\/\d+/
+    let rgxOnlyNr = /^\d+$/
+  
     
-    function matchRGX (rgx) {
-      return input.match(rgx)[0]
+    function matchRGX (inpt, rgx) {
+      return inpt.match(rgx)[0]
     }
 
-    if (rgxFractDecimal.test(input)) {
-      nr = matchRGX(rgxFractDecimal)
-      let splt = nr.split("/");
-      let numerator = parseFloat(splt[0]);
-      let denominator = parseFloat(splt[1]);
-      result = numerator / denominator;
+    let nr = input.match(rgxUnitAtEnd)[1]
 
-    } else if (rgxFractional.test(input)) {
-      console.log("fractional")
-      result = matchRGX(rgxFractional)
-     
-    } else if (rgxDecimal.test(input)) {
-      console.log("decimal")
-      result = matchRGX(rgxDecimal) 
+    // 1. number at the begginig
+    if (rgxNrAtBeggining.test(nr)) {
+      
+      if (rgxDoubleFraction.test(nr)) {
+        result = "invalid number"
 
-    } else if (rgxtillLastNr.test(input)) {
-      console.log("here")
-      let thatPart = matchRGX(rgxOnlyNr)
-      thatPart.test(rgxOnlyNr) 
-        ? result = matchRGX(rgxNoNumber) 
-        : result = "invalid number"
+      } else if (rgxFractDecimal.test(nr)) {
+        let nrMatch = matchRGX(nr, rgxFractDecimal)
+        let splt = nrMatch.split("/");
+        let numerator = parseFloat(splt[0]);
+        let denominator = parseFloat(splt[1]);
+        result = numerator / denominator;
+       
+      } else if (rgxFractional.test(nr)) {
+        result = matchRGX(nr, rgxFractional)
+       
+      } else if (rgxDecimal.test(nr)) {
+        result = matchRGX(nr, rgxDecimal)
 
-    } else if (rgxOnlyUnit.test(input)) {
-      result = 1
+      } else if (rgxOnlyNr.test(nr)) {
+        result = matchRGX(nr, rgxOnlyNr)
+
+      } else if (rgxOnlyUnit.test(nr)) {
+        result = 1
+
+      } else {
+        result = "invalid number"
+      }
+
+    // 2. not number at the beggining
+    } else {
+      rgxOnlyUnit.test(input) ? result = 1 : result = "invalid number"
     }
-
     
     return result;
   };
@@ -54,69 +63,48 @@ function ConvertHandler() {
     let result;
     let rgx = /[A-Za-z]+$/
     let rgxSpecialCharBefore = /[^a-zA-Z0-9]+[a-zA-Z]/
+    let rgxUnitAtEnd = /(.*)(gal|l|mi|km|lbs|kg)$/i
 
-    if (rgxSpecialCharBefore.test(input)) {
+    let unit = input.match(rgxUnitAtEnd)[2]
+    console.log("unit = " + unit)
 
+    if (unit.length > 0) {
+      console.log("unit")
+    } else {
       result = "invalid unit"
-
-    } else if (rgx.test(input)) {
-
-      switch (input.match(rgx)[0].toLowerCase()) {
-        case "gal"  :
-          result = "gal";
-          break;
-        case "l" :
-          result = "L"
-          break;
-        case "mi" :
-          result = "mi"
-          break;
-        case "km" :
-          result = "km"
-          break;
-        case "lbs" :
-          result = "lbs"
-          break;
-        case "kg" :
-          result = "kg"
-          break;
-        default : 
-          result = "invalid unit"
-          break;
-      } 
-
     }
+
     
     return result;
   };
 
   // RETURN UNIT
-  this.getReturnUnit = function(initUnit) {
-    let result;
+  // this.getReturnUnit = function(initUnit) {
+  //   let result;
 
-    switch (initUnit) {
-      case "gal" :
-        result = "L"
-        break;
-      case "L" :
-        result = "gal"
-        break;
-      case "mi" :
-        result = "km"
-        break;
-      case "km" :
-        result = "mi"
-        break;
-      case "lbs" :
-        result = "kg"
-        break;
-      case "kg" :
-        result = "lbs"
-        break;
-    }
+  //   switch (initUnit) {
+  //     case "gal" :
+  //       result = "L"
+  //       break;
+  //     case "L" :
+  //       result = "gal"
+  //       break;
+  //     case "mi" :
+  //       result = "km"
+  //       break;
+  //     case "km" :
+  //       result = "mi"
+  //       break;
+  //     case "lbs" :
+  //       result = "kg"
+  //       break;
+  //     case "kg" :
+  //       result = "lbs"
+  //       break;
+  //   }
 
-    return result;
-  };
+  //   return result;
+  // };
 
   this.spellOutUnit = function(unit) {
     let result;
