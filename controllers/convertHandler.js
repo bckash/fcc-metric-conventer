@@ -3,12 +3,11 @@ function ConvertHandler() {
   // GET NUMBER
   this.getNum = function(input) {
     let result;
-    // let rgxtillLastNr = /^(.*?\d)/
     let rgxOnlyUnit = /^(gal|l|mi|km|lbs|kg)$/i
-    // let rgxUnitAtEnd = /(.*)(gal|l|mi|km|lbs|kg)$/i
     let rgxNr = /^\d.*\d/
-
-    let rgxDoubleFraction = /\/\d+\/\d+/
+    let rgx1Nr = /^\d(?!.*\d)/
+    let rgxSpecialCharAfterNr = /\d[^\w\s]/
+    let rgxDoubleFraction = /\/\d+\//
     let rgxFractDecimal = /^[-+]?(\d+(\.\d+)?|\.\d+)\/[-+]?(\d+(\.\d+)?|\.\d+)/
     let rgxDecimal = /^\d+(\.\d+)/
     let rgxFractional = /^\d+\/\d+/
@@ -20,40 +19,47 @@ function ConvertHandler() {
       return inpt.match(rgx)[0]
     }
 
-    if (rgxNr.test(input)) {
-      let nr = matchRGX(rgxNr)
+    // only one number at the beginning
+    if (rgx1Nr.test(input)) {
       
+      rgxSpecialCharAfterNr.test(input)
+        ? result = invld
+        : result = matchRGX(rgx1Nr)
+        
+    // potential "number phrase" - starting and finishing with a number   
+    } else if (rgxNr.test(input)) {
+      let nr = matchRGX(rgxNr)
+      // a) double fraction
       if (rgxDoubleFraction.test(input)) {
         result = invld
-
+      // b) fractional and decimal 
       } else if (rgxFractDecimal.test(input)) {
         nr = matchRGX(rgxFractDecimal)
         let splt = nr.split("/");
         let numerator = parseFloat(splt[0]);
-        // console.log("numerator = " + numerator)
         let denominator = parseFloat(splt[1]);
-        // console.log("denominator = " + denominator)
         result = numerator / denominator;
-       
+      // C) fractional
       } else if (rgxFractional.test(input)) {
         result = matchRGX(input, rgxFractional)
-       
+      // d) decimal
       } else if (rgxDecimal.test(input)) {
         result = matchRGX(rgxDecimal)
-        
+      // f) whole number (with check if any special char after)
       } else if (rgxOnlyNr.test(nr)) {
-        result = matchRGX(nr)
-
+        rgxSpecialCharAfterNr.test(input)
+        ? result = invld
+        : result = result = matchRGX(nr)
+      // all else = invalid  
       } else {
         result = invld
       }
-
+    
+    // no correct number or only unit
     } else {
       rgxOnlyUnit.test(input) ? result = 1 : result = invld
     }
 
-
-    
     return result;
   };
 
