@@ -66,19 +66,14 @@ function ConvertHandler() {
   // GET UNIT
   this.getUnit = function(input) {
     let result;
-    let rgx = /[A-Za-z]+$/
-    let rgxSpecialCharBefore = /[^a-zA-Z0-9]+[a-zA-Z]/
-    let rgxUnitAtEnd = /(.*)(gal|l|mi|km|lbs|kg)$/i
+    let rgxUnitAtEnd = /(.*)(l|mi|km|lbs|kg)$/i
+    let rgxGal = /(.*)(gal)$/i
 
-    let unit = input.match(rgxUnitAtEnd)[2]
-    console.log("unit = " + unit)
-
-    if (unit.length > 0) {
-      console.log("unit")
-    } else {
-      result = "invalid unit"
-    }
-
+    rgxUnitAtEnd.test(input)
+      ? rgxGal.test(input)
+        ? result = input.match(rgxGal)[2]
+        : result = input.match(rgxUnitAtEnd)[2]
+      : result = "invalid unit"
     
     return result;
   };
