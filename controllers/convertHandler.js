@@ -79,32 +79,32 @@ function ConvertHandler() {
   };
 
   // RETURN UNIT
-  // this.getReturnUnit = function(initUnit) {
-  //   let result;
+  this.getReturnUnit = function(initUnit) {
+    let result;
 
-  //   switch (initUnit) {
-  //     case "gal" :
-  //       result = "L"
-  //       break;
-  //     case "L" :
-  //       result = "gal"
-  //       break;
-  //     case "mi" :
-  //       result = "km"
-  //       break;
-  //     case "km" :
-  //       result = "mi"
-  //       break;
-  //     case "lbs" :
-  //       result = "kg"
-  //       break;
-  //     case "kg" :
-  //       result = "lbs"
-  //       break;
-  //   }
+    switch (initUnit) {
+      case "gal" :
+        result = "L"
+        break;
+      case "L" :
+        result = "gal"
+        break;
+      case "mi" :
+        result = "km"
+        break;
+      case "km" :
+        result = "mi"
+        break;
+      case "lbs" :
+        result = "kg"
+        break;
+      case "kg" :
+        result = "lbs"
+        break;
+    }
 
-  //   return result;
-  // };
+    return result;
+  };
 
   this.spellOutUnit = function(unit) {
     let result;

@@ -13,29 +13,29 @@ module.exports = function (app) {
       let inp = req.query.input
       let getNr = convertHandler.getNum(inp)
       let getUnit = convertHandler.getUnit(inp)
-      // let returnUnit = convertHandler.getReturnUnit(getUnit)
-      // let convert = convertHandler.convert(
-      //   convertHandler.getNum(inp), convertHandler.getUnit(inp)
-      // )
-      // let stringResult = convertHandler.getString(
-      //   getNr, getUnit, convert, returnUnit
-      // )
+      let returnUnit = convertHandler.getReturnUnit(getUnit)
+      let convert = convertHandler.convert(
+        convertHandler.getNum(inp), convertHandler.getUnit(inp)
+      )
+      let stringResult = convertHandler.getString(
+        getNr, getUnit, convert, returnUnit
+      )
       
       // console.clear()
-      console.log("input : "+ inp)
-      console.log("initNum = " + getNr)
-      console.log("initUnit = " + getUnit)
+      // console.log("input : "+ inp)
+      // console.log("initNum = " + getNr)
+      // console.log("initUnit = " + getUnit)
       // console.log("return unit = " + returnUnit)
       // console.log("return nr = " + convert)
       // console.log("string = " + stringResult)
-      console.log("......")
+      // console.log("......")
 
       res.send({
         initNum: getNr, 
         initUnit: getUnit, 
-        // returnNum: convert,
-        // returnUnit: returnUnit, 
-        // string: stringResult
+        returnNum: convert,
+        returnUnit: returnUnit, 
+        string: stringResult
       })
       
     })
