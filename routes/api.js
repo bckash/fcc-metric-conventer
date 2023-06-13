@@ -22,13 +22,13 @@ module.exports = function (app) {
       )
       
       // console.clear()
-      // console.log("input : "+ inp)
-      // console.log("initNum = " + getNr)
-      // console.log("initUnit = " + getUnit)
-      // console.log("return unit = " + returnUnit)
-      // console.log("return nr = " + convert)
-      // console.log("string = " + stringResult)
-      // console.log("......")
+      console.log("input : "+ inp)
+      console.log("initNum = " + getNr)
+      console.log("initUnit = " + getUnit)
+      console.log("return unit = " + returnUnit)
+      console.log("return nr = " + convert)
+      console.log("string = " + stringResult)
+      console.log("......")
 
       res.send({
         initNum: getNr, 

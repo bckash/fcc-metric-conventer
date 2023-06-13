@@ -75,7 +75,7 @@ function ConvertHandler() {
         : result = input.match(rgxUnitAtEnd)[2]
       : result = "invalid unit"
     
-    return result;
+    return result.toLowerCase();
   };
 
   // RETURN UNIT
@@ -86,7 +86,7 @@ function ConvertHandler() {
       case "gal" :
         result = "L"
         break;
-      case "L" :
+      case "l" :
         result = "gal"
         break;
       case "mi" :
@@ -123,7 +123,7 @@ function ConvertHandler() {
       case "gal" :
         result = parseFloat(initNum)*galToL
         break;
-      case "L" :
+      case "l" :
         result = parseFloat(initNum)/galToL
         break;
       case "mi" :
