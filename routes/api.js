@@ -29,14 +29,24 @@ module.exports = function (app) {
       console.log("return nr = " + convert)
       console.log("string = " + stringResult)
       console.log("......")
-
-      res.send({
-        initNum: getNr, 
-        initUnit: getUnit, 
-        returnNum: convert,
-        returnUnit: returnUnit, 
-        string: stringResult
-      })
       
+      if (getNr === "invalid number" && getUnit === "invalid unit") {
+        res.send("invalid number and unit")
+
+      } else if (getUnit === "invalid unit") {
+        res.send("invalid unit")
+
+      } else if (getNr === "invalid number") {
+        res.send("invalid number")
+
+      } else {
+        let initNum = getNr
+        let initUnit = getUnit
+        let returnNum = convert
+        let string = stringResult
+        res.json(
+          { initNum, initUnit, returnNum, returnUnit, string }
+        )
+      }
     })
 };
