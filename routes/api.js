@@ -22,7 +22,8 @@ module.exports = function (app) {
       )
       
       // console.clear()
-      console.log("input : "+ inp)
+      console.log("input : "+ inp + " / ")
+      console.log(typeof inp)
       console.log("initNum = " + getNr)
       console.log("initUnit = " + getUnit)
       console.log("return unit = " + returnUnit)

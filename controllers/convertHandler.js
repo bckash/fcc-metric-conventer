@@ -49,7 +49,7 @@ function ConvertHandler() {
       } else if (rgxOnlyNr.test(nr)) {
         rgxSpecialCharAfterNr.test(input)
         ? result = invld
-        : result = result = matchRGX(nr)
+        : result = matchRGX(nr)
       // all else = invalid  
       } else {
         result = invld
@@ -59,8 +59,10 @@ function ConvertHandler() {
     } else {
       rgxOnlyUnit.test(input) ? result = 1 : result = invld
     }
+    
+    if (result === invld) return result
+    else return parseFloat(result) 
 
-    return result;
   };
 
   // GET UNIT
@@ -126,26 +128,26 @@ function ConvertHandler() {
 
     switch (initUnit) {
       case "gal" :
-        result = parseFloat(initNum)*galToL
+        result = (initNum)*galToL
         break;
       case "L" :
-        result = parseFloat(initNum)/galToL
+        result = (initNum)/galToL
         break;
       case "mi" :
-        result = parseFloat(initNum)*miToKm
+        result = (initNum)*miToKm
         break;
       case "km" :
-        result = parseFloat(initNum)/miToKm
+        result = (initNum)/miToKm
         break;
       case "lbs" :
-        result = parseFloat(initNum)*lbsToKg
+        result = (initNum)*lbsToKg
         break;
       case "kg" :
-        result = parseFloat(initNum)/lbsToKg
+        result = (initNum)/lbsToKg
         break;
     }
     if (result)
-    return result.toFixed(5);
+    return parseFloat(result.toFixed(5));
   };
 
   // STRING
