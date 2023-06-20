@@ -113,12 +113,6 @@ function ConvertHandler() {
     return result;
   };
 
-  this.spellOutUnit = function(unit) {
-    let result;
-    
-    return result;
-  };
-
   // RETURN NUMBER
   this.convert = function(initNum, initUnit) {
     const galToL = 3.78541;
@@ -151,7 +145,7 @@ function ConvertHandler() {
   };
 
   // STRING
-  this.getString = function(initNum, initUnit, returnNum, returnUnit) {
+  this.getString = function(initNum, returnNum, returnUnit) {
     let result;
     let ru;
     let ruOG;

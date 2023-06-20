@@ -18,7 +18,7 @@ module.exports = function (app) {
         convertHandler.getNum(inp), convertHandler.getUnit(inp)
       )
       let stringResult = convertHandler.getString(
-        getNr, getUnit, convert, returnUnit
+        getNr, convert, returnUnit
       )
       
       // console.clear()
