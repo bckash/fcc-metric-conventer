@@ -96,7 +96,7 @@ suite('Unit Tests', function(){
             assert.equal(convertHandler.getReturnUnit(inpt), "kg")
             done()
         })
-        test(" convert kg to lbs", (done) => {
+        test("convert kg to lbs", (done) => {
             let inpt = 'kg'
             assert.equal(convertHandler.getReturnUnit(inpt), "lbs")
             done()

@@ -7,7 +7,7 @@ function ConvertHandler() {
     let rgxNr = /^\d.*\d/
     let rgx1Nr = /^\d(?!.*\d)/
     let rgxSpecialCharAfterNr = /\d[^\w\s]/
-    let rgxDoubleFraction = /\/\d+\//
+    let rgxDoubleFraction = /\/.+\//
     let rgxFractDecimal = /^[-+]?(\d+(\.\d+)?|\.\d+)\/[-+]?(\d+(\.\d+)?|\.\d+)/
     let rgxDecimal = /^\d+(\.\d+)/
     let rgxFractional = /^\d+\/\d+/
@@ -41,6 +41,7 @@ function ConvertHandler() {
         result = numerator / denominator;
       // C) fractional
       } else if (rgxFractional.test(input)) {
+        console.log("test")
         result = matchRGX(input, rgxFractional)
       // d) decimal
       } else if (rgxDecimal.test(input)) {
@@ -150,32 +151,36 @@ function ConvertHandler() {
     let ru;
     let ruOG;
 
-    switch (returnUnit) {
-      case "gal" :
-        ru = "gallons"
-        ruOG = "liters"
-        break;
-      case "L" :
-        ru = "liters"
-        ruOG = "gallons"
-        break;
-      case "mi" :
-        ru = "miles"
-        ruOG = "kilometers"
-        break;
-      case "km" :
-        ru = "kilometers"
-        ruOG = "miles"
-        break;
-      case "lbs" :
-        ru = "pounds"
-        ruOG = "kilograms"
-        break;
-      case "kg" :
-        ru = "kilograms"
-        ruOG = "pounds"
-        break;
+    if (returnUnit === undefined) return
+    else {
+      switch (returnUnit) {
+        case "gal" :
+          ru = "gallons"
+          ruOG = "liters"
+          break;
+        case "L" :
+          ru = "liters"
+          ruOG = "gallons"
+          break;
+        case "mi" :
+          ru = "miles"
+          ruOG = "kilometers"
+          break;
+        case "km" :
+          ru = "kilometers"
+          ruOG = "miles"
+          break;
+        case "lbs" :
+          ru = "pounds"
+          ruOG = "kilograms"
+          break;
+        case "kg" :
+          ru = "kilograms"
+          ruOG = "pounds"
+          break;
+      }
     }
+
 
     result = initNum + " " + ruOG + " converts to " + returnNum + " " + ru
 
